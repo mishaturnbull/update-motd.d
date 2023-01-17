@@ -1,0 +1,21 @@
+#!/bin/bash
+#title          : /etc/update-motd.d/95-fortune
+#description    : This script outputs a fortune in the form of a cow speaking it.
+#author         : mishaturnbull
+#date           : 2023-01-16
+#version        : 0.1
+#usage          : bash 95-fortune OR ./95-fortune
+#notes          : Not colorful, actually!
+#bash_version   : 5.1.4(1)-release
+#dependencies   : fortune (sudo apt install fortune)
+#               : cowsay (sudo apt install cowsay)
+#installation   : chmod +x 95-fortune && mv 95-fortune /etc/update-motd.d/95-fortune
+#license        : GPLv3
+#==============================================================================
+
+export PATH="/usr/games:$PATH"
+FORTUNE=$(which fortune)
+COWSAY=$(which cowsay)
+
+$FORTUNE | $COWSAY
+
