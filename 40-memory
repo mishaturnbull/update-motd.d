@@ -42,7 +42,7 @@ for((i=0;i<CALCU;i++)); do echo -en "\033[1;32mI"; done
 for((i=0;i<CALCB;i++)); do echo -en "\033[01;34mI"; done
 for((i=0;i<CALCS;i++)); do echo -en "\033[1;31mI"; done
 for((i=0;i<CALCC;i++)); do echo -en "\033[1;33mI"; done
-for((i=0;i<TCALCFF;i++)); do echo -en "\033[0mI"; done
+for((i=0;i<TCALCFF;i++)); do echo -en "\033[0m "; done
 
 echo -en "$END"
 echo -en " $TCALCU%/$TCALCF%\n"
@@ -50,7 +50,7 @@ echo -en " $TCALCU%/$TCALCF%\n"
 echo -en "\033[1;33mMemory \033[0m(\033[1;34mSwap\033[0m) \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
 
 for((i=0;i<SUSED;i++)); do echo -en "\033[01;31mI"; done
-for((i=0;i<SFREE;i++)); do echo -en "\033[0mI"; done
+for((i=0;i<SFREE;i++)); do echo -en "\033[0m "; done
 
 echo -en "$END"
 echo -en " $SUSED%/$SFREE%\n"

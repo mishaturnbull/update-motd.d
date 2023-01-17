@@ -43,7 +43,7 @@ do
     for((i=0;i<$nice;i++)); do echo -en "\033[1;32mI"; done
     for((i=0;i<$system;i++)); do echo -en "\033[01;31mI"; done
     for((i=0;i<$iowait;i++)); do echo -en "\033[01;33mI"; done
-    for((i=0;i<$free;i++)); do echo -en "\033[0mI"; done
+    for((i=0;i<$free;i++)); do echo -en "\033[0m "; done
     echo -en "\033[0m$END"
     echo -en " $all%/$free%\n"
 done
@@ -65,7 +65,7 @@ do
     for((i=0;i<$nice;i++)); do echo -en "\033[1;32mI"; done
     for((i=0;i<$system;i++)); do echo -en "\033[01;31mI"; done
     for((i=0;i<$iowait;i++)); do echo -en "\033[01;33mI"; done
-    for((i=0;i<$free;i++)); do echo -en "\033[0mI"; done
+    for((i=0;i<$free;i++)); do echo -en "\033[0m "; done
     echo -en "\033[0m$END"
     echo -en " $all%/$free%\n"
     ((c++))

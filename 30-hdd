@@ -23,7 +23,7 @@ do
   echo -en "\033[1;33mHDD \033[1;32m$partition \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
   
   for((i=0;i<usep;i++)); do echo -en "\033[01;31mI"; done
-  for((i=0;i<free;i++)); do echo -en "\033[0mI"; done
+  for((i=0;i<free;i++)); do echo -en "\033[0m "; done
   
   echo -en "\033[0m$END"
   echo -en " $usep%/$free%\n"
