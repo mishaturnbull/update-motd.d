@@ -22,15 +22,19 @@ BC=$(which bc)
 PYTHON=$(which python)
 c=1
 
+# mpstat has evidently changed its output format, now by default adds an extra
+# column to the timestamp.  setting this fixes it.
+export S_TIME_FORMAT="ISO"
+
 $MPSTAT -P ALL 2 1 | sed -n '4p' | while read output;
 do 
-    user=$(echo $output | awk '{print $3}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    system=$(echo $output | awk '{print $5}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    user=$(echo $output | awk '{print $3}' | $PYTHON -c "print(round(float(input())))")
+    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "print(round(float(input())))")
+    system=$(echo $output | awk '{print $5}' | $PYTHON -c "print(round(float(input())))")
+    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "print(round(float(input())))")
     idle=$(echo $output | awk '{print $12}')
     idles=$($BC <<< "100 - $idle")
-    usep=$(echo "$idles" | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    usep=$(echo "$idles" | $PYTHON -c "print(round(float(input())))")
     
     echo -en "\033[1;33mCPU \033[1;32mALL \033[0m(\033[01;31mLoad\033[0m/\033[0mIdle) $BEGIN"
     all=$(($user + $nice + $system + $iowait))
@@ -46,13 +50,13 @@ done
 
 $MPSTAT -P ALL | tail -n +5 | while read output;
 do 
-    user=$(echo $output | awk '{print $3}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    system=$(echo $output | awk '{print $5}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
-    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    user=$(echo $output | awk '{print $3}' | $PYTHON -c "print(round(float(input())))")
+    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "print(round(float(input())))")
+    system=$(echo $output | awk '{print $5}' | $PYTHON -c "print(round(float(input())))")
+    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "print(round(float(input())))")
     idle=$(echo $output | awk '{print $12}')
     idles=$($BC <<< "100 - $idle")
-    usep=$(echo "$idles" | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    usep=$(echo "$idles" | $PYTHON -c "print(round(float(input())))")
     
     echo -en "\033[1;33m     \033[1;32m$(printf %02d $c) \033[0m(\033[01;31mLoad\033[0m/\033[0mIdle) $BEGIN"
     all=$(($user + $nice + $system + $iowait))
