@@ -20,7 +20,7 @@ do
   usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
   partition=$(echo $output | awk '{ print $2 }' )
   free=$((100-$usep))
-  echo -en "\033[1;33mHDD \033[1;32m$partition \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
+  echo -en "\033[1;33mHDD \033[1;32m$partition \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) \n $BEGIN"
   
   for((i=0;i<usep;i++)); do echo -en "\033[01;31mI"; done
   for((i=0;i<free;i++)); do echo -en "\033[0m "; done
