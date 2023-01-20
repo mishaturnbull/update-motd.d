@@ -26,7 +26,7 @@ c=1
 # column to the timestamp.  setting this fixes it.
 export S_TIME_FORMAT="ISO"
 
-$MPSTAT -P ALL 2 1 | sed -n '4p' | while read output;
+$MPSTAT -P ALL | sed -n '4p' | while read output;
 do 
     user=$(echo $output | awk '{print $3}' | $PYTHON -c "print(round(float(input())))")
     nice=$(echo $output | awk '{print $4}' | $PYTHON -c "print(round(float(input())))")
