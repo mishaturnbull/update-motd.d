@@ -17,5 +17,5 @@ export PATH="/usr/games:$PATH"
 FORTUNE=$(which fortune)
 COWSAY=$(which cowsay)
 
-$FORTUNE | $COWSAY
+$FORTUNE -n 250 -s -a | $COWSAY
 
