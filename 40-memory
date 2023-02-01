@@ -36,21 +36,30 @@ TCALCFF=`echo "100 - $TCALCSF" | $BC`
 SFREE=`printf "%.0f" $(free | grep Swap | awk '{print $4/$2 * 100.0}' | $BC)`
 SUSED=`printf "%.0f" $(free | grep Swap | awk '{print $3/$2 * 100.0}' | $BC)`
 
-echo -en "\033[1;33mMemory \033[0m(\033[1;34mMem\033[0m) \033[0m(\033[1;32mU\033[01;34mB\033[1;31mS\033[1;33mC\033[0m/\033[0mFree) $BEGIN"
+DCALCU=$($BC <<< "($CALCU * 0.54 + 0.5)/1")
+DCALCB=$($BC <<< "($CALCB * 0.54 + 0.5)/1")
+DCALCS=$($BC <<< "($CALCS * 0.54 + 0.5)/1")
+DCALCC=$($BC <<< "($CALCC * 0.54 + 0.5)/1")
+DTCALCFF=$($BC <<< "($TCALCFF * 0.54 + 0.5)/1")
 
-for((i=0;i<CALCU;i++)); do echo -en "\033[1;32mI"; done
-for((i=0;i<CALCB;i++)); do echo -en "\033[01;34mI"; done
-for((i=0;i<CALCS;i++)); do echo -en "\033[1;31mI"; done
-for((i=0;i<CALCC;i++)); do echo -en "\033[1;33mI"; done
-for((i=0;i<TCALCFF;i++)); do echo -en "\033[0m "; done
+DSFREE=$($BC <<< "($SFREE * 0.67 + 0.5)/1")
+DSUSED=$($BC <<< "($SUSED * 0.67 - 0.5)/1")
+
+echo -en "\033[1;33mMemory \033[0m(\033[1;34mMem\033[0m) \033[0m(\033[1;32mU\033[01;34mB\033[1;31mS\033[1;33mC\033[0m/\033[0mFree)   $BEGIN"
+
+for((i=0;i<DCALCU;i++)); do echo -en "\033[1;32mI"; done
+for((i=0;i<DCALCB;i++)); do echo -en "\033[01;34mI"; done
+for((i=0;i<DCALCS;i++)); do echo -en "\033[1;31mI"; done
+for((i=0;i<DCALCC;i++)); do echo -en "\033[1;33mI"; done
+for((i=0;i<DTCALCFF;i++)); do echo -en "\033[0m "; done
 
 echo -en "$END"
 echo -en " $TCALCU%/$TCALCF%\n"
 
 echo -en "\033[1;33mMemory \033[0m(\033[1;34mSwap\033[0m) \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
 
-for((i=0;i<SUSED;i++)); do echo -en "\033[01;31mI"; done
-for((i=0;i<SFREE;i++)); do echo -en "\033[0m "; done
+for((i=0;i<DSUSED;i++)); do echo -en "\033[01;31mI"; done
+for((i=0;i<DSFREE;i++)); do echo -en "\033[0m "; done
 
-echo -en "$END"
+echo -en "\033[0m$END"
 echo -en " $SUSED%/$SFREE%\n"

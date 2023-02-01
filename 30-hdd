@@ -14,16 +14,19 @@
 TAB="|"
 BEGIN="["
 END="]"
+BC=$(which bc)
 
 df -H | grep -vE '^Filesystem|tmpfs|cdrom|cgmfs|fuse|udev|cgroup|none' | awk '{ print $5 " " $1 }' | sort -t" " -k 2 | while read output;
 do
   usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
   partition=$(echo $output | awk '{ print $2 }' )
+  drawuse=$($BC <<< "($usep * 0.9)/1")
   free=$((100-$usep))
+  drawfree=$((90-$drawuse))
   echo -en "\033[1;33mHDD \033[1;32m$partition \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) \n $BEGIN"
   
-  for((i=0;i<usep;i++)); do echo -en "\033[01;31mI"; done
-  for((i=0;i<free;i++)); do echo -en "\033[0m "; done
+  for((i=0;i<drawuse;i++)); do echo -en "\033[01;31mI"; done
+  for((i=0;i<drawfree;i++)); do echo -en "\033[0m "; done
   
   echo -en "\033[0m$END"
   echo -en " $usep%/$free%\n"
